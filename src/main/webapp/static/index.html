@@ -1,0 +1,394 @@
+
+<!DOCTYPE HTML>
+<html lang="pt-br" ng-app >
+    <head>
+        <meta charset="UTF-8">
+        <title>Sistema de Controle de Processo Judicial</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css"/>
+</head>
+<body>
+    <div id="tudo">
+
+        <div id="topo">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <a class="brand" href="#">SCPJ - Sistema de Controle de Processo Judicial</a>
+                    <ul class="nav">
+                        <li class="divider-vertical"><a href="" ng:click="selected=1"><i class="icon-briefcase"></i> Advogado</a></li>
+                        <li class="divider-vertical" ><a href="" ng:click="selected=2"><i class="icon-user"></i> Parte</a></li>
+                        <li class="divider-vertical"><a href="" ng:click="selected=3"><i class="icon-list-alt"></i> Processo</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="conteudo" class="container-fluid">
+            
+            <div id="conteudo">
+                <!--........................................Advogado...........................................-->
+                <div class="thumbnail row-fluid"  ng:show="selected==1" ng-controller="controllerAdvogado">
+                    <div class="well">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="row-fluid">
+                                    
+                                    <div class="span6 well">
+                                        <form>
+                                            <legend>Cadastro de Advogado</legend>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    <label>Nome: </label>
+                                                    <input id="txtNome" class="span12" type="text" ng-model="unidade.nome"></br>
+                                                    <label>OAB: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.oab"></br>
+                                                    <label>Rua: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.rua"></br>
+                                                    <label>Número: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.numero"></br>  
+                                                    <label>Complemento: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.complemento"></br>
+                                                </div>
+                                              <div class="span6">
+                                                    <label>Bairro: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.bairro"></br> 
+                                                    <label>Cidade: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.cidade"></br>
+                                                    <label>UF: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.uf"></br>
+                                                    <label>Celular: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.celular"></br>
+                                                    <label>E-mail: </label>
+                                                    <input class="span12" type="email" ng-model="unidade.email"></br>
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span12 thumbnail" align="right">
+                                                    <button class="btn btn-info" type="submit" ng-click="salvar()"><i class="icon-ok icon-white"></i> Gravar</button>
+                                                    <button class="btn btn-info" ng-click="reset()"><i class="icon-minus-sign icon-white"
+                                                    ></i> Limpar</button>
+                                                </div> 
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="span6">
+                                        <legend>Lista dos Advogados</legend>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>OAB</th>
+                                                    <th>E-mail</th>
+                                                    <th>Editar</th>
+                                                    <th>Detalhar</th>
+                                                    <th>Excluir</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="ad in lista">
+                                                    <td>{{ad.nome}}</td>
+                                                    <td>{{ad.oab}}</td>
+                                                    <td>{{ad.email}}</td>
+                                                    <td>
+                                                        <button class="btn btn-info" type="button" ng-click="editar(ad)"><i class="icon-edit icon-white"></i></button>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#modal-advogado" role="button" ng:click="detalhes(ad)" class="btn btn-info" data-toggle="modal"><i class="icon-list-alt icon-white"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-danger" type="button" ng-click="excluir(ad)"><i class="icon-fullscreen icon-white"></i></button> 
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal-advogado" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-header">
+                            <button type="button" ng-click="reset()" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4>Detalhes Advogado</h4>
+                        </div>
+                        <div class="modal-body">
+                                <div class="row-fluid thumbnail">
+                                    <div class="span6"> 
+                                        <label>Nome: </label>
+                                        <input class="span12" type="text" ng-model="unidade.nome" disabled></br>
+                                        <label>OAB: </label>
+                                        <input class="span12" type="text" ng-model="unidade.oab" disabled></br>
+                                        <label>Rua: </label>
+                                        <input class="span12" type="text" ng-model="unidade.rua" disabled></br>
+                                        <label>Número: </label>
+                                        <input class="span12" type="text" ng-model="unidade.numero" disabled></br>  
+                                        <label>Complemento: </label>
+                                        <input class="span12" type="text" ng-model="unidade.complemento" disabled></br>
+                                    </div>
+                                  <div class="span6">
+                                        <label>Bairro: </label>
+                                        <input class="span12" type="text" ng-model="unidade.bairro" disabled></br> 
+                                        <label>Cidade: </label>
+                                        <input class="span12" type="text" ng-model="unidade.cidade" disabled></br>
+                                        <label>UF: </label>
+                                        <input class="span12" type="text" ng-model="unidade.uf" disabled></br>
+                                        <label>Celular: </label>
+                                        <input class="span12" type="text" ng-model="unidade.celular" disabled></br>
+                                        <label>E-mail: </label>
+                                        <input class="span12" type="email" ng-model="unidade.email" disabled></br>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-info" ng-click="reset()" data-dismiss="modal" aria-hidden="true"><i class="icon-remove icon-white"></i> Fechar</button>
+                        </div>
+                    </div>
+                </div>
+                <!--......................................Parte............................................-->
+                <div class="thumbnail"  ng:show="selected==2" ng-controller="controllerParte">
+                   <div class="well">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="row-fluid">
+                                    
+                                    <div class="span6 well">
+                                        <form>
+                                            <legend>Cadastro da Parte</legend>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    <label>Nome: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.nome"></br>
+                                                    <label>RG: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.rg"></br>
+                                                    <label>CPF: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.cpf"></br>
+                                                    <label>Rua: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.rua"></br>
+                                                    <label>Número: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.numero"></br>  
+                                                </div>
+                                              <div class="span6">
+                                                    <label>Bairro: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.bairro"></br> 
+                                                    <label>Cidade: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.cidade"></br>
+                                                    <label>UF: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.uf"></br>
+                                                    <label>Celular: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.celular"></br>
+                                                    <label>E-mail: </label>
+                                                    <input class="span12" type="email" ng-model="unidade.email"></br>
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span12 thumbnail" align="right">
+                                                    <button class="btn btn-info" type="submit" ng-click="salvar()"><i class="icon-ok icon-white"></i> Gravar</button>
+                                                    <button class="btn btn-info" ng-click="reset()"><i class="icon-minus-sign icon-white"
+                                                    ></i> Limpar</button>
+                                                </div> 
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="span6">
+                                        <legend>Lista das Partes</legend>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>CPF</th>
+                                                    <th>E-mail</th>
+                                                    <th>Editar</th>
+                                                    <th>Detalhar</th>
+                                                    <th>Excluir</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="parte in lista">
+                                                    <td>{{parte.nome}}</td>
+                                                    <td>{{parte.cpf}}</td>
+                                                    <td>{{parte.email}}</td>
+                                                    <td>
+                                                        <button class="btn btn-info" type="button" ng-click="editar(parte)"><i class="icon-edit icon-white"></i></button>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#modal-parte" ng-click="detalhes(parte)" role="button" class="btn btn-info" data-toggle="modal"><i class="icon-list-alt icon-white"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-danger" type="button" ng-click="excluir(parte)"><i class="icon-fullscreen icon-white"></i></button> 
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal-parte" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-header">
+                            <button type="button" class="close" ng-click="reset()" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4>Detalhes Parte</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row-fluid thumbnail">
+                                <div class="span6">
+                                    <label>Nome: </label>
+                                    <input class="span12" type="text" ng-model="unidade.nome" disabled></br>
+                                    <label>RG: </label>
+                                    <input class="span12" type="text" ng-model="unidade.rg" disabled></br>
+                                    <label>CPF: </label>
+                                    <input class="span12" type="text" ng-model="unidade.cpf" disabled></br>
+                                    <label>Rua: </label>
+                                    <input class="span12" type="text" ng-model="unidade.rua" disabled></br>
+                                    <label>Número: </label>
+                                    <input class="span12" type="text" ng-model="unidade.numero" disabled></br>  
+                                </div>
+                              <div class="span6">
+                                    <label>Bairro: </label>
+                                    <input class="span12" type="text" ng-model="unidade.bairro" disabled></br> 
+                                    <label>Cidade: </label>
+                                    <input class="span12" type="text" ng-model="unidade.cidade" disabled></br>
+                                    <label>UF: </label>
+                                    <input class="span12" type="text" ng-model="unidade.uf" disabled></br>
+                                    <label>Celular: </label>
+                                    <input class="span12" type="text" ng-model="unidade.celular" disabled></br>
+                                    <label>E-mail: </label>
+                                    <input class="span12" type="email" ng-model="unidade.email" disabled></br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-info" data-dismiss="modal" ng-click="reset()" aria-hidden="true"><i class="icon-remove icon-white"></i> Fechar</button>
+                        </div>
+                    </div>
+                </div>
+                <!--..........................................Processo..........................................-->
+                <div class="thumbnail"  ng:show="selected==3" ng-controller="controllerProcesso">
+                    <div class="well">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="row-fluid">
+                                    
+                                    <div class="span6 well">
+                                        <form>
+                                            <legend>Cadastro de Processo</legend>
+                                            <div class="row-fluid">
+                                                <div class="span6">
+                                                    <label>Número: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.numero"></br>
+                                                    <label>Data Abertura: </label>
+                                                      <input class="span12" id="datepicker1" type="text" ng-model="unidade.dataAbertura"></br>
+                                                    <label>Data Encerramento: </label>
+                                                    <input class="span12" id="datepicker2" type="text" ng-model="unidade.dataEncerramento"></br>
+                                                    <label>Status: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.status"></br>  
+                                                </div>
+                                              <div class="span6">
+                                                    <label>Tipo de Processo: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.tipoProcesso"></br> 
+                                                    <label>Advogado: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.advogado"></br>
+                                                    <label>Parte: </label>
+                                                    <input class="span12" type="text" ng-model="unidade.parte"></br>
+                                                </div>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="span12 thumbnail" align="right">
+                                                    <button class="btn btn-info" type="submit" ng-click="salvar()"><i class="icon-ok icon-white"></i> Gravar</button>
+                                                    <button class="btn btn-info" ng-click="reset()"><i class="icon-minus-sign icon-white"
+                                                    ></i> Limpar</button>
+                                                </div> 
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="span6">
+                                        <legend>Lista de Processos</legend>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Número</th>
+                                                    <th>Status</th>
+                                                    <th>Tipo Processo</th>
+                                                    <th>Editar</th>
+                                                    <th>Detalhar</th>
+                                                    <th>Excluir</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="processo in lista">
+                                                    <td>{{processo.numero}}</td>
+                                                    <td>{{processo.status}}</td>
+                                                    <td>{{processo.tipoProcesso}}</td>
+                                                    <td>
+                                                        <button class="btn btn-info" type="button" ng-click="editar(processo)"><i class="icon-edit icon-white"></i></button>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#modal-processo" role="button" ng:click="detalhes(processo)" class="btn btn-info" data-toggle="modal"><i class="icon-list-alt icon-white"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-danger" type="button" ng-click="excluir(processo)"><i class="icon-fullscreen icon-white"></i></button> 
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal-processo" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-header">
+                            <button type="button" class="close" ng-click="reset()" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4>Detalhes Processo</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row-fluid thumbnail">
+                                <div class="span6">
+                                    <label>Número: </label>
+                                    <input class="span12" type="text" ng-model="unidade.numero" disabled></br>
+                                    <label>Data Abertura: </label>
+                                    <input class="span12" type="text" ng-model="unidade.dataAbertura" disabled></br>
+                                    <label>Data Encerramento: </label>
+                                    <input class="span12" type="text" ng-model="unidade.dataEncerramento" disabled></br>
+                                    <label>Status: </label>
+                                    <input class="span12" type="text" ng-model="unidade.status" disabled></br>  
+                                </div>
+                              <div class="span6">
+                                    <label>Tipo de Processo: </label>
+                                    <input class="span12" type="text" ng-model="unidade.tipoProcesso" disabled></br> 
+                                    <label>Advogado: </label>
+                                    <input class="span12" type="text" ng-model="unidade.advogado" disabled></br>
+                                    <label>Parte: </label>
+                                    <input class="span12" type="text" ng-model="unidade.parte" disabled></br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-info" data-dismiss="modal" ng-click="reset()" aria-hidden="true"><i class="icon-remove icon-white"></i> Fechar</button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div> 
+
+        <div id="rodape">
+            <div class="thumbnail" style="background-color:#F4F4F4">
+                <center>Todos os direitos reservados!</center>
+            </div>
+        </div>
+
+    </div>
+    <script src="controller-processo.js" type="text/javascript"></script>
+    <script src="controller-advogado.js" type="text/javascript"></script>
+    <script src="controller-parte.js" type="text/javascript"></script>
+    <script src="js/angular.min.js" type="text/javascript"></script>
+    <script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+</body>
+</html>
